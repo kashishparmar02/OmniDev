@@ -1,0 +1,28 @@
+# Dependencies & build
+node_modules/
+dist/
+build/
+coverage/
+*.tsbuildinfo
+
+# Env & secrets
+.env
+.env.*
+!.env.example
+*.pem
+credentials*.json
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Logs / temp
+*.log
+tmp/
+.pr-review-workspaces/
+.omnidev-workspaces/
+
+# Local MCP / agent scratch
+.cursor/mcp.local.json
