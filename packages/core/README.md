@@ -1,10 +1,5 @@
-# `@omnidev/core`
+# @omnidev/core
 
-Shared contracts for OmniDev:
+Shared contracts for OmniDev (provider interface, thread states, finding schema).
 
-- Provider interface (Bitbucket / GitHub / …)
-- Thread classification states
-- Review finding schema
-- Config helpers
-
-**Status:** placeholder — implementation lands in a later commit.
+**Status:** schemas currently ship inside `@omnidev/mcp-bitbucket`. Extraction into this package is planned before the GitHub provider.
