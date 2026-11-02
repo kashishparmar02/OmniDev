@@ -2,6 +2,14 @@
 
 Thanks for helping build OmniDev. Keep changes **small, incremental, and tested**.
 
+## Branch workflow
+
+- **`main`** — stable / release line  
+- **`development`** — active work branch (**do not delete**)  
+- Day-to-day commits go on `development`  
+- Open a PR from `development` → `main` when a slice is ready to land  
+- Keep commit messages short and conventional; **never** add AI `Co-Authored-By` trailers  
+
 ## Ground rules
 
 - No secrets in commits (`.env`, tokens, private diffs).
