@@ -1,0 +1,17 @@
+{
+  "name": "omnidev",
+  "version": "0.1.0",
+  "private": true,
+  "description": "OmniDev — agentic PR and developer workflow toolkit",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "test": "npm test --workspace=@omnidev/mcp-bitbucket",
+    "typecheck": "npm run typecheck --workspace=@omnidev/mcp-bitbucket",
+    "build": "npm run build --workspace=@omnidev/mcp-bitbucket"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
