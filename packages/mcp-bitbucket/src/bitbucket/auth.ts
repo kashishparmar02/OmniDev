@@ -9,6 +9,6 @@ export function buildAuthHeaders(config: Pick<ReviewConfig, "email" | "apiToken"
   return {
     Authorization: buildBasicAuthHeader(config),
     Accept: "application/json",
-    "User-Agent": "cursor-pr-review/0.1",
+    "User-Agent": "omnidev-mcp-bitbucket/0.1",
   };
 }

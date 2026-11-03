@@ -25,4 +25,5 @@ tmp/
 .omnidev-workspaces/
 
 # Local MCP / agent scratch
-.cursor/mcp.local.json
+.cursor/
+.tools/

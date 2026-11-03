@@ -1,6 +1,6 @@
-# EI Angular review checklist (bundled from Skills Guild)
+# Angular review checklist
 
-Use when reviewing Angular Enterprise Scaffolding apps. Prefer live Factory `angular-code-reviewer` when MCP is available.
+Use when reviewing Angular apps (standalone / signals / OnPush patterns).
 
 ## Components
 
@@ -49,6 +49,6 @@ Use when reviewing Angular Enterprise Scaffolding apps. Prefer live Factory `ang
 
 ## Blockers (usually critical/high)
 
-- Missing OnPush / non-standalone where factory requires it
+- Missing OnPush / non-standalone where the project standard requires it
 - Hardcoded secrets, `eval`, open redirects
 - Writable public signals mutating shared state unsafely

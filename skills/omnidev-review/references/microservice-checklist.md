@@ -1,6 +1,6 @@
-# EI Microservice review checklist (bundled from Skills Guild)
+# Microservice review checklist
 
-Use when reviewing Clean Architecture microservices (Node/Express, Python/FastAPI, Rust/Axum). Prefer live Factory skill when MCP is available.
+Use when reviewing Clean Architecture microservices (Node/Express, Python/FastAPI, Rust/Axum, etc.).
 
 ## Domain
 

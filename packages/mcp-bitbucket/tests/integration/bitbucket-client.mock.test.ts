@@ -6,7 +6,7 @@ import { createPullRequestComment } from "../../src/bitbucket/comments.js";
 const config = {
   email: "user@example.com",
   apiToken: "test-token",
-  workspace: "ei-india-admin",
+  workspace: "acme",
   reviewWorkspace: "/tmp/pr-review-workspaces",
   localRepoRoots: ["/tmp"],
 };
@@ -35,7 +35,7 @@ describe("BitbucketClient mocked integration", () => {
     );
 
     const client = new BitbucketClient(config);
-    const pr = await getPullRequest(client, "ei-india-admin", "ei-core-ui", 218);
+    const pr = await getPullRequest(client, "acme", "sample-app", 218);
     expect(pr.id).toBe(218);
     expect(pr.title).toBe("Test PR");
   });
@@ -53,7 +53,7 @@ describe("BitbucketClient mocked integration", () => {
     vi.stubGlobal("fetch", fetchMock);
 
     const client = new BitbucketClient(config);
-    const created = await createPullRequestComment(client, "ei-india-admin", "ei-core-ui", 218, {
+    const created = await createPullRequestComment(client, "acme", "sample-app", 218, {
       content: "Do these need to be sequential if they are independent?",
       inline: { path: "src/a.ts", to: 42 },
     });

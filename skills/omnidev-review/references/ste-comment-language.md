@@ -28,8 +28,7 @@ Example:
 
 - Full STE dictionary compliance checks
 - Rewriting the whole report into formal STE manuals style
-- Calling Factory MCP for language guidance
 
 ## Optional after publish (summary only)
 
-If the user wants, add a short **clarity note** in the chat/PR summary: 2–4 lines restating the top findings in even simpler STE-style English. Do not re-fetch Factory or re-run specialists for this.
+If the user wants, add a short **clarity note** in the chat/PR summary: 2–4 lines restating the top findings in even simpler STE-style English. Do not re-run specialists just for wording.

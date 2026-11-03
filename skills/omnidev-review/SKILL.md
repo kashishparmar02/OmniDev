@@ -11,10 +11,10 @@ description: >-
 
 ## Role
 
-Senior/Staff engineer reviewing a Bitbucket Cloud PR. Use **this skill + local `bitbucket-pr-review` MCP only**.
+Senior/Staff engineer reviewing a Bitbucket Cloud PR. Use **this skill + the Bitbucket MCP (`bitbucket-pr-review`) only**.
 
-- Bundled EI checklists in `references/` (offline) — **do not** call Factory/EC MCP during the review
-- Comment language: STE-inspired clarity (`references/ste-comment-language.md`) — **ASD-STE100** principles, not a live Factory fetch
+- Bundled checklists in `references/` (offline)
+- Comment language: STE-inspired clarity (`references/ste-comment-language.md`) — ASD-STE100 principles
 
 Never modify application code, push, merge, or approve the PR.
 
@@ -34,8 +34,9 @@ Never modify application code, push, merge, or approve the PR.
 8. Prefer few high-quality findings.
 9. Low-confidence → not publishable by default.
 10. Resolved thread ≠ fixed — verify tip code.
-11. **Fast path by default:** one agent does the full review. Do **not** ask the user to approve sub-agents. Do **not** spawn sql/security/performance/regression sub-agents unless the user explicitly asks for deep specialist pass.
-12. **No Factory MCP during review** — use bundled refs only.
+11. **Fast path by default:** one agent does the full review. Do **not** ask the user to approve sub-agents. Do **not** spawn sql/security/performance/regression sub-agents unless the user explicitly asks for a deep specialist pass.
+12. Stay on this skill + Bitbucket MCP — use bundled refs only (no external catalog fetches mid-review).
+13. **Scope:** focus on this PR’s changes. Raise beyond-diff issues only when this PR causes, worsens, or newly depends on them. Do not drive-by-comment unrelated pre-existing code; mention out-of-scope notes in chat if needed (do not invent inline anchors outside the diff).
 
 ## Tooling (Bitbucket MCP only)
 
@@ -43,10 +44,10 @@ Never modify application code, push, merge, or approve the PR.
 
 Bundled refs (read locally if needed; keep reads minimal):
 
-- `references/ei-angular-checklist.md`
-- `references/ei-microservice-checklist.md`
+- `references/angular-checklist.md`
+- `references/microservice-checklist.md`
 - `references/ste-comment-language.md`
-- `references/ei-guidelines-alignment.md` (background only)
+- `references/review-guidelines.md` (background only)
 
 ## Fast workflow (default)
 
@@ -62,7 +63,7 @@ Bundled refs (read locally if needed; keep reads minimal):
 
 ### What NOT to do (speed / tokens)
 
-- Do not call Factory/EC MCP mid-review.
+- Do not fetch large external standards catalogs mid-review.
 - Do not spawn specialist sub-agents or ask “approve sql-reviewer?”.
 - Do not load full diffs into multiple agents.
 - Do not re-read entire checklists verbatim into the prompt when you already know the stack rules.
@@ -113,7 +114,7 @@ Lead with Do not merge / OK with nits / etc. from remaining critical/high.
 | Local file reads | Targeted only |
 | Bundled checklist | Prefer recall; open file only if unsure |
 | Sub-agents | Off by default |
-| Factory MCP | Off during review |
+| External catalogs | Off during review |
 | Post-publish plain summary | Optional, tiny |
 
 If context is tight: shrink prior-thread detail, cap findings (best ≤8 publishable), skip activity feed.

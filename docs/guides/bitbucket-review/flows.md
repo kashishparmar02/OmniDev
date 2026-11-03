@@ -6,8 +6,8 @@
 sequenceDiagram
   actor U as User
   participant A as Cursor Agent
-  participant M as bitbucket-pr-review MCP
-  participant G as Local Git / ASSET
+  participant M as Bitbucket MCP
+  participant G as Local Git
   participant B as Bitbucket Cloud
 
   U->>A: Review this Bitbucket PR: URL
@@ -15,7 +15,7 @@ sequenceDiagram
   A->>M: bitbucket_get_pr / files / diff / commits / comments
   M->>B: GET pullrequests, diffstat, diff, commits, comments
   A->>M: bitbucket_resolve_local_repo
-  M->>G: Match origin remote under ASSET roots
+  M->>G: Match origin under configured local roots
   alt repo missing locally
     A->>M: bitbucket_prepare_review_workspace
     M->>G: SSH clone + fetch + optional worktree
@@ -24,7 +24,7 @@ sequenceDiagram
     M->>G: fetch refs + optional detached worktree
   end
   A->>G: Explore changed files + callers/tests/SQL/etc.
-  opt complex risk areas
+  opt user asks for deep specialist pass
     A->>A: Delegate sql/security/performance/regression agents
   end
   A->>A: Validate + dedupe findings
@@ -36,9 +36,7 @@ sequenceDiagram
   A->>U: Published / skipped / unanchorable summary
 ```
 
-## 2. Connectivity / setup verification flow
-
-Used during bootstrap and after token rotation.
+## 2. Connectivity / setup verification
 
 ```mermaid
 flowchart TD
@@ -49,13 +47,6 @@ flowchart TD
   E --> F[Restart Cursor MCP servers]
   F --> G[Agent can call bitbucket_get_current_user]
 ```
-
-Verified previously:
-
-- Auth OK for `kashish.parmar@ei.study` / `kashishparmar1`
-- PR `ei-core-ui#218` fetch + diff OK
-- Comment create OK; approve blocked (403) — correct scopes
-- Local match: `~/Desktop/ASSET/ei-core-ui`
 
 ## 3. Repository access modes
 
@@ -73,9 +64,9 @@ flowchart LR
 
 Rules:
 
-- Do not assume current branch is the PR source branch
-- Do not overwrite uncommitted changes
-- Prefer worktree / read-only inspection
+- Do not assume current branch is the PR source branch  
+- Do not overwrite uncommitted changes  
+- Prefer worktree / read-only inspection  
 
 ### Mode B — clone into managed workspace
 
@@ -88,7 +79,7 @@ flowchart LR
   HTTPS --> Fetch
 ```
 
-Default clone root: `BITBUCKET_REVIEW_WORKSPACE` (default `~/Developer/pr-review-workspaces`).
+Default clone root: `BITBUCKET_REVIEW_WORKSPACE` (default `~/.omnidev/review-workspaces`).
 
 ## 4. Finding lifecycle
 
@@ -107,7 +98,7 @@ stateDiagram-v2
   Approved --> SkippedUnanchorable: diff no longer supports line
 ```
 
-## 5. Inline anchor mapping flow
+## 5. Inline anchor mapping
 
 ```mermaid
 flowchart TD
@@ -120,13 +111,9 @@ flowchart TD
   Inline --> Post[POST /comments]
 ```
 
-Bitbucket semantics used by this system:
-
-- `to` = line number on the **new** file side
-- `from` = line number on the **old** file side
-- Added files: `to` only
-- Deleted files: `from` only
-- Renames: comment against the new path when side=`new`
+- `to` = line on the **new** file side  
+- `from` = line on the **old** file side  
+- Added files: `to` only; deleted: `from` only  
 
 ## 6. Approval gate (mandatory)
 
@@ -136,14 +123,12 @@ Repository: {repo}
 PR: #{id}
 Files reviewed: N
 Findings: N
-Critical / High / Medium / Low / Info
 
 Proposed inline comments:
 1. HIGH  path:line  short title
 ...
 
 Publish which? all | ids... | none
-Also post PR summary? yes/no (separate confirm)
 ```
 
 Only after the user answers does the agent call publish tools with `confirmed=true`.
@@ -155,7 +140,7 @@ Only after the user answers does the agent call publish tools with `confirmed=tr
 | Auto-comment on fetch | No publish without `confirmed` |
 | Comment on wrong line | Anchor validator |
 | Duplicate spam | Exact content + path/line duplicate check |
-| Approve/merge via token | Scopes omit `write:pullrequest` |
+| Approve/merge via token | Prefer scopes without `write:pullrequest` |
 | Token in skill files | Skills contain process only |
 | Checkout over dirty work | Worktree / fetch-only helpers |
-| Blind `--import tsx` from $HOME | `bin/run-mcp.sh` + `dist/` |
+| Blind `tsx` from `$HOME` | `bin/run-mcp.sh` + `dist/` |

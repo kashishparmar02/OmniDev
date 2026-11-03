@@ -576,7 +576,7 @@ server.registerTool(
   {
     title: "Resolve local repository",
     description:
-      "Find whether a Bitbucket repo already exists under configured local roots (e.g. ASSET folder).",
+      "Find whether a Bitbucket repo already exists under configured local roots (BITBUCKET_LOCAL_REPO_ROOTS).",
     inputSchema: {
       workspace: z.string(),
       repoSlug: z.string(),

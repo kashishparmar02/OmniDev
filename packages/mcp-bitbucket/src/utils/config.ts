@@ -21,11 +21,11 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): ReviewConfig {
   const email = (env.BITBUCKET_EMAIL || "").trim();
   const apiToken = (env.BITBUCKET_API_TOKEN || "").trim();
   const username = (env.BITBUCKET_USERNAME || "").trim() || undefined;
-  const workspace = (env.BITBUCKET_WORKSPACE || "ei-india-admin").trim();
+  const workspace = (env.BITBUCKET_WORKSPACE || "").trim();
   const reviewWorkspace = expandHome(
-    (env.BITBUCKET_REVIEW_WORKSPACE || "~/Developer/pr-review-workspaces").trim(),
+    (env.BITBUCKET_REVIEW_WORKSPACE || "~/.omnidev/review-workspaces").trim(),
   );
-  const rootsRaw = (env.BITBUCKET_LOCAL_REPO_ROOTS || "~/Desktop/ASSET").trim();
+  const rootsRaw = (env.BITBUCKET_LOCAL_REPO_ROOTS || "").trim();
   const localRepoRoots = rootsRaw
     .split(",")
     .map((p) => expandHome(p.trim()))

@@ -48,7 +48,7 @@ Use the path from `npm run mcp:paths`, or:
 {
   "command": "/absolute/path/to/OmniDev/node_modules/.bin/omnidev-bitbucket-mcp",
   "env": {
-    "BITBUCKET_EMAIL": "you@ei.study",
+    "BITBUCKET_EMAIL": "you@example.com",
     "BITBUCKET_API_TOKEN": "ATATT..."
   }
 }

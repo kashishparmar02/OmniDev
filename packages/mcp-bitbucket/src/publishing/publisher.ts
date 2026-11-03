@@ -77,7 +77,7 @@ export async function publishApprovedFindings(
 
     const body =
       finding.commentBody ||
-      `${finding.explanation}${finding.suggestion ? `\n\n${finding.suggestion}` : ""}\n\n<!-- cursor-pr-review:${finding.id} -->`;
+      `${finding.explanation}${finding.suggestion ? `\n\n${finding.suggestion}` : ""}\n\n<!-- omnidev-review:${finding.id} -->`;
 
     const duplicate = findDuplicateComment(existing, body, anchor.inline);
     if (duplicate && typeof duplicate.id === "number") {

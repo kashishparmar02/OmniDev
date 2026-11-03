@@ -37,7 +37,7 @@ console.log(
         "bitbucket-pr-review": {
           command: bitbucketCommand,
           env: {
-            BITBUCKET_EMAIL: "you@ei.study",
+            BITBUCKET_EMAIL: "you@example.com",
             BITBUCKET_API_TOKEN: "ATATT...",
           },
         },

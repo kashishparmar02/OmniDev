@@ -3,27 +3,27 @@ import { parseBitbucketRemote } from "../../src/repository/git-context.js";
 
 describe("parseBitbucketRemote", () => {
   it("parses SSH remotes", () => {
-    expect(parseBitbucketRemote("git@bitbucket.org:ei-india-admin/ei-core-ui.git")).toEqual({
-      workspace: "ei-india-admin",
-      repoSlug: "ei-core-ui",
+    expect(parseBitbucketRemote("git@bitbucket.org:acme/sample-app.git")).toEqual({
+      workspace: "acme",
+      repoSlug: "sample-app",
     });
   });
 
   it("parses HTTPS remotes with username", () => {
     expect(
-      parseBitbucketRemote("https://kashishparmar1@bitbucket.org/ei-india-admin/api-gateway.git"),
+      parseBitbucketRemote("https://gituser@bitbucket.org/acme/api-gateway.git"),
     ).toEqual({
-      workspace: "ei-india-admin",
+      workspace: "acme",
       repoSlug: "api-gateway",
     });
   });
 
   it("parses ssh.bitbucket.org remotes", () => {
     expect(
-      parseBitbucketRemote("git@ssh.bitbucket.org:ei-india-admin/authentication-portal.git"),
+      parseBitbucketRemote("git@ssh.bitbucket.org:acme/auth-portal.git"),
     ).toEqual({
-      workspace: "ei-india-admin",
-      repoSlug: "authentication-portal",
+      workspace: "acme",
+      repoSlug: "auth-portal",
     });
   });
 });

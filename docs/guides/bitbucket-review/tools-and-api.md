@@ -53,8 +53,8 @@ or:
 
 ```json
 {
-  "workspace": "ei-india-admin",
-  "repoSlug": "ei-core-ui",
+  "workspace": "acme",
+  "repoSlug": "sample-app",
   "pullRequestId": 218
 }
 ```
@@ -63,7 +63,7 @@ Inline publish example:
 
 ```json
 {
-  "url": "https://bitbucket.org/ei-india-admin/ei-core-ui/pull-requests/218",
+  "url": "https://bitbucket.org/acme/sample-app/pull-requests/218",
   "content": "Do these awaits need to stay sequential?",
   "path": "src/app/app.component.ts",
   "line": 42,
@@ -163,7 +163,7 @@ Implemented in `src/bitbucket/client.ts` and helpers:
 
 ```bash
 npm run check:auth
-npm run check:pr -- "https://bitbucket.org/ei-india-admin/ei-core-ui/pull-requests/218"
+npm run check:pr -- "https://bitbucket.org/acme/sample-app/pull-requests/218"
 ```
 
 Useful when debugging MCP spawn issues independently of Cursor.

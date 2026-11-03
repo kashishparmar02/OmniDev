@@ -6,8 +6,8 @@
 flowchart LR
   User[Engineer in Cursor]
   Agent[Cursor Agent + Skill/Agents]
-  MCP[bitbucket-pr-review MCP]
-  Local[Local git clones under ASSET]
+  MCP["@omnidev/mcp-bitbucket"]
+  Local[Local git clones]
   BB[Bitbucket Cloud API + Git]
 
   User -->|PR URL / approvals| Agent
@@ -23,12 +23,12 @@ flowchart LR
 ```mermaid
 flowchart TB
   subgraph Cursor["Cursor runtime"]
-    Skill[Skill: bitbucket-pr-review]
+    Skill[Skill: omnidev-review]
     Orch[Agent: pr-review-orchestrator]
     Spec[Agents: sql / security / performance / regression]
   end
 
-  subgraph MCPPkg["cursor-pr-review package"]
+  subgraph MCPPkg["packages/mcp-bitbucket"]
     Server[src/mcp/server.ts]
     BBClient[src/bitbucket/*]
     Repo[src/repository/*]
@@ -48,20 +48,17 @@ flowchart TB
   CLI --> Repo
 ```
 
-### A. Cursor PR Review Orchestrator
+### A. Review orchestrator
 
-Coordinates URL parse → context gather → selective specialist delegation → validate/dedupe → approval report → publish.
+Coordinates URL parse → context gather → (optional) specialist pass → validate/dedupe → approval report → publish.
 
-It should **not** always fan out to all specialists. Delegate only when the diff signals SQL, security, hot paths, or shared-contract risk.
+Do **not** always fan out to specialists. Delegate only when the user asks or the diff clearly warrants it.
 
-### B. Reusable skill
+### B. Skill
 
-- Project copy: `.cursor/skills/bitbucket-pr-review/SKILL.md`
-- Personal copy (cross-repo): `~/.cursor/skills/bitbucket-pr-review/SKILL.md`
+Canonical: `skills/omnidev-review/`. Install under `~/.cursor/skills/` for cross-repo use. Methodology and constraints only — **no secrets**.
 
-Contains methodology, comment style, publish constraints. Contains **no secrets**.
-
-### C. Specialized agents
+### C. Specialized agents (optional)
 
 | Agent | When |
 |---|---|
@@ -70,26 +67,21 @@ Contains methodology, comment style, publish constraints. Contains **no secrets*
 | `performance-reviewer` | N+1, hot loops, unsafe concurrency |
 | `regression-reviewer` | Shared helpers, contracts, workers/retries |
 
-### D. Bitbucket MCP / libraries
+### D. MCP / libraries
 
-Independently testable TypeScript modules. MCP is a thin tool façade over:
+Independently testable TypeScript modules. MCP is a thin façade over:
 
-- `bitbucket/` — HTTP + PR/comment operations
-- `publishing/` — diff parse, anchors, publish batching
-- `repository/` — local discovery, clone, git safety
-- `schemas/` — Zod contracts for findings + Bitbucket payloads
-- `utils/` — config, logging, redaction
+- `bitbucket/` — HTTP + PR/comment operations  
+- `publishing/` — diff parse, anchors, publish batching  
+- `repository/` — local discovery, clone, git safety  
+- `schemas/` — Zod contracts  
+- `utils/` — config, logging, redaction  
 
 ## 3. Package layout
 
 ```text
-cursor-pr-review/
-├── bin/run-mcp.sh              # MCP entry (cwd-safe)
-├── docs/                       # This documentation set
-├── .cursor/
-│   ├── mcp.json
-│   ├── skills/bitbucket-pr-review/
-│   └── agents/*.md
+packages/mcp-bitbucket/
+├── bin/run-mcp.sh
 ├── config/review-guidelines.md
 ├── src/
 │   ├── mcp/server.ts
@@ -99,75 +91,30 @@ cursor-pr-review/
 │   ├── publishing/
 │   ├── schemas/
 │   └── utils/
-├── tests/
-│   ├── unit/
-│   └── integration/
-├── .env.example                # committed template
-└── .env                        # local secrets (gitignored)
+└── tests/
 ```
 
-## 4. Trust boundaries
+Skills live under repo-root `skills/omnidev-review/`.
 
-| Boundary | Rule |
-|---|---|
-| Bitbucket write | Only comment create/delete; gated by `confirmed=true` |
-| Git working tree | No destructive checkout; prefer fetch + detached worktree |
-| Secrets | Loaded from `.env` by launcher; never returned by tools |
-| Untrusted PR content | Treated as data; cannot override skill/system instructions |
-| Publish anchors | Must validate against current PR diff before POST |
+## 4. Finding model
 
-## 5. Data contracts
+Findings use a structured schema (`id`, severity, confidence, path/line, evidence, `publishable`, …). Inline Bitbucket comments use `to` / `from` on diff hunks only — never invent anchors on unchanged lines outside the diff.
 
-### ReviewFinding (Zod)
+## 5. Runtime topology
 
-```ts
-{
-  id: string
-  category: correctness | regression | architecture | performance | sql |
-            security | concurrency | memory | code-quality | testing | api-contract
-  severity: critical | high | medium | low | informational
-  confidence: high | medium | low
-  filePath: string
-  line: number
-  side: "new" | "old"
-  title: string
-  explanation: string
-  impact: string
-  suggestion?: string
-  evidence: string[]
-  validationStatus: validated | requires-investigation | rejected
-  publishable: boolean
-  commentBody?: string
-}
-```
+1. Cursor starts `bin/run-mcp.sh`  
+2. Script resolves package root, ensures `dist/` (+ core) exist  
+3. Server speaks MCP over stdio  
+4. Agent calls tools; libraries talk to `https://api.bitbucket.org/2.0`  
+5. Diff endpoints may 302; client follows redirects  
 
-### Inline comment body (Bitbucket)
-
-```json
-{
-  "content": { "raw": "..." },
-  "inline": { "path": "src/file.ts", "to": 42 }
-}
-```
-
-Use `from` for deleted/old-side lines. Never invent anchors for unchanged lines outside the diff hunks.
-
-## 6. Runtime topology
-
-1. Cursor starts `bin/run-mcp.sh`
-2. Script `cd`s into package root, ensures `dist/` exists, runs:
-   `node --env-file=.env dist/mcp/server.js`
-3. Server speaks MCP over stdio
-4. Agent calls tools; libraries talk to `https://api.bitbucket.org/2.0`
-5. Diff endpoints may 302; client follows redirects
-
-## 7. Failure handling
+## 6. Failure handling
 
 | Failure | Behavior |
 |---|---|
 | 429 / 5xx | Exponential backoff retries |
 | Invalid anchor | Reject publish; report unanchorable |
 | Duplicate comment body+path+line | Skip |
-| Ambiguous network after POST | Prefer re-list comments before blind retry (publisher duplicate check) |
-| Missing local repo | Clone to `BITBUCKET_REVIEW_WORKSPACE` via SSH (HTTPS only if explicitly enabled) |
-| Dirty local tree | Leave it alone; use worktree for PR commit when requested |
+| Ambiguous network after POST | Re-list comments before blind retry |
+| Missing local repo | Clone to `BITBUCKET_REVIEW_WORKSPACE` via SSH |
+| Dirty local tree | Leave alone; use worktree when needed |
