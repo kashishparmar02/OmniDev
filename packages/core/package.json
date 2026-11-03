@@ -1,0 +1,28 @@
+{
+  "name": "@omnidev/core",
+  "version": "0.1.0",
+  "description": "OmniDev shared contracts and author PR workflow (scripts + MCP tool registration)",
+  "type": "module",
+  "private": true,
+  "exports": {
+    "./pr-workflow/author-tools.js": "./dist/pr-workflow/author-tools.js",
+    "./errors.js": "./dist/errors.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.9.0",
+    "vitest": "^5.0.5"
+  }
+}

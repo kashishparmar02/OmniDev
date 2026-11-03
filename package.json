@@ -7,9 +7,13 @@
     "packages/*"
   ],
   "scripts": {
-    "test": "npm test --workspace=@omnidev/mcp-bitbucket",
-    "typecheck": "npm run typecheck --workspace=@omnidev/mcp-bitbucket",
-    "build": "npm run build --workspace=@omnidev/mcp-bitbucket"
+    "test": "npm test --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "build": "npm run build --workspaces --if-present",
+    "mcp:bitbucket": "npm run mcp -w @omnidev/mcp-bitbucket",
+    "mcp:github": "npm run mcp -w @omnidev/mcp-github",
+    "mcp:paths": "node scripts/print-mcp-paths.mjs",
+    "check:auth": "npm run check:auth -w @omnidev/mcp-bitbucket"
   },
   "engines": {
     "node": ">=20"

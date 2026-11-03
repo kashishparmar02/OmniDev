@@ -26,6 +26,7 @@ import { ensureReviewClone } from "../repository/clone-manager.js";
 import { fetchRefSafe, ensureWorktree, getWorkingTreeStatus } from "../repository/git-context.js";
 import { isAppError, redactSecrets } from "../utils/errors.js";
 import { ReviewFindingSchema } from "../schemas/review-finding.js";
+import { registerAuthorPrTools } from "@omnidev/core/pr-workflow/author-tools.js";
 import { join } from "node:path";
 
 function textResult(data: unknown) {
@@ -682,6 +683,8 @@ server.registerTool(
     }
   },
 );
+
+registerAuthorPrTools(server, { toolPrefix: "bitbucket_", hostLabel: "Bitbucket Cloud" });
 
 async function main() {
   const transport = new StdioServerTransport();

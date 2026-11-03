@@ -3,7 +3,7 @@
 ```text
 ┌─────────────────────────────────────────────────────────────┐
 │  Cursor / CLI / (later) Web UI                              │
-│  Skills: omnidev-review, omnidev-respond, …                 │
+│  Skills: omnidev-review, omnidev-respond, pr-* …            │
 └───────────────────────────┬─────────────────────────────────┘
                             │ MCP tools
 ┌───────────────────────────▼─────────────────────────────────┐
@@ -11,10 +11,11 @@
 │  Provider interface · Thread state · Finding schema         │
 └───────────────┬─────────────────────────────┬───────────────┘
                 │                             │
-     ┌──────────▼──────────┐       ┌──────────▼──────────┐
-     │ mcp-bitbucket       │       │ mcp-github (later)  │
-     │ PR/diff/comments/…  │       │ same tool shapes    │
-     └──────────┬──────────┘       └──────────┬──────────┘
+     ┌──────────▼──────────┐  ┌─────▼────────────┐  ┌─────▼──────────┐
+     │ mcp-bitbucket       │  │ @omnidev/core    │  │ mcp-github     │
+     │ review + bitbucket_ │  │ pr-workflow      │  │ github_pr_*    │
+     │ pr_* author tools   │  │ scripts          │  │ author tools   │
+     └──────────┬──────────┘  └────────┬─────────┘  └────────┬───────┘
                 │                             │
                 └──────────► Host APIs ◄──────┘
 ```

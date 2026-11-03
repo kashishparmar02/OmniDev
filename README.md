@@ -7,10 +7,10 @@ OmniDev is a local-first, extensible platform for developer workflow agents — 
 | Seat | What OmniDev helps with |
 |---|---|
 | **Reviewer** | Deep, repo-aware PR review → human approval → precise inline comments |
-| **Author** | Fetch review comments → verify against tip → reply / resolve / keep open for discussion |
-| **Later** | Issue triage, PR draft/generation, more providers, thin UI |
+| **Author** | Fetch review comments → reply / resolve → raise or refresh PR description (`omnidev-respond`) |
+| **Later** | Issue triage, more providers, thin UI |
 
-**Status:** early scaffold. Bitbucket Cloud review core lands next (incremental commits). GitHub and author-mode follow.
+**Status:** Bitbucket review + author tools on `mcp-bitbucket`; GitHub author tools on `mcp-github`; shared scripts in `@omnidev/core`.
 
 ---
 
@@ -31,11 +31,15 @@ OmniDev is a local-first, extensible platform for developer workflow agents — 
 OmniDev/
 ├── packages/
 │   ├── core/              # Shared types, provider interfaces, thread state machine
-│   ├── mcp-bitbucket/     # Bitbucket Cloud MCP (review + later respond)
-│   └── mcp-github/        # GitHub MCP (planned)
+│   ├── core/              # Shared author PR workflow + registerAuthorPrTools
+│   ├── mcp-bitbucket/     # Bitbucket review + bitbucket_pr_* author tools
+│   └── mcp-github/        # github_pr_* author tools (review planned)
 ├── skills/
 │   ├── omnidev-review/    # Reviewer playbook
-│   └── omnidev-respond/   # Author reply/resolve playbook (planned)
+│   ├── omnidev-respond/   # Author loop (comments → reply → raise PR)
+│   ├── pr-comments/       # List PR threads (MCP)
+│   ├── pr-comment-reply/  # Reply / resolve (MCP)
+│   └── pr-description-generator/  # Open or update PR (MCP)
 ├── apps/
 │   └── web/               # Optional thin UI (planned — after author-mode)
 ├── docs/
@@ -76,13 +80,21 @@ Details: [docs/ROADMAP.md](./docs/ROADMAP.md)
 
 ## Quick start
 
-Not installable yet — packages land in following commits.
-
 ```bash
 git clone https://github.com/kashishparmar02/OmniDev.git
 cd OmniDev
-# npm install   # after packages land
+npm install
+npm run build
+npm test
 ```
+
+Run MCP locally: `npm run mcp:bitbucket` or `npm run mcp:github` (from repo root after build).
+
+Cursor config paths: `npm run mcp:paths` (prints `mcp.json` snippet).
+
+Run and wire MCP — [docs/guides/run-mcp.md](./docs/guides/run-mcp.md). Author tools: [pr-workflow-mcp.md](./docs/guides/pr-workflow-mcp.md). Review: [packages/mcp-bitbucket/README.md](./packages/mcp-bitbucket/README.md).
+
+Skills: `skills/omnidev-review`, `skills/omnidev-respond`, plus `pr-comments`, `pr-comment-reply`, `pr-description-generator`.
 
 ---
 

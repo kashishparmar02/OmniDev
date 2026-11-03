@@ -39,12 +39,26 @@ Docs: [Create an API token](https://support.atlassian.com/bitbucket-cloud/docs/c
 ## 2. Install
 
 ```bash
-cd ~/Desktop/ASSET/cursor-pr-review
-cp .env.example .env   # then fill values
+cd /path/to/OmniDev
 npm install
 npm run build
 npm test
+cd packages/mcp-bitbucket
+cp .env.example .env   # optional if using mcp.json env
 npm run check:auth
+```
+
+Run the MCP process locally (stdio):
+
+```bash
+cd /path/to/OmniDev
+npm run mcp:bitbucket
+```
+
+Print Cursor **`mcp.json`** paths:
+
+```bash
+npm run mcp:paths
 ```
 
 ## 3. Cursor MCP wiring
@@ -53,19 +67,38 @@ npm run check:auth
 
 ```json
 "bitbucket-pr-review": {
-  "command": "/Users/kashish.parmar/Desktop/ASSET/cursor-pr-review/bin/run-mcp.sh"
+  "command": "/absolute/path/to/OmniDev/packages/mcp-bitbucket/bin/run-mcp.sh",
+  "env": {
+    "BITBUCKET_EMAIL": "you@ei.study",
+    "BITBUCKET_API_TOKEN": "ATATT..."
+  }
 }
 ```
 
 Project mirror: `.cursor/mcp.json`.
+
+### Environment: `mcp.json` **and** optional `.env`
+
+Both work together:
+
+| Source | Use for |
+|--------|---------|
+| **`mcp.json` → `env`** | Per-machine secrets in Cursor (nothing committed) |
+| **`packages/mcp-bitbucket/.env`** | Local CLI (`npm run mcp`), copy from `.env.example` |
+
+**Precedence:** variables Cursor sets in `mcp.json` **win**. Node loads `.env` only when the file exists; it **does not override** variables already in the process environment.
+
+Author shell tools (`bitbucket_pr_*`) also see `BITBUCKET_API_TOKEN` from either source (inherited `process.env`).
+
+Optional keys in either place: `BITBUCKET_USERNAME`, `BITBUCKET_WORKSPACE`, `BITBUCKET_REVIEW_WORKSPACE`, `BITBUCKET_LOCAL_REPO_ROOTS`.
 
 ### Why the shell launcher?
 
 Cursor may spawn MCP with cwd = `$HOME`. The launcher:
 
 1. `cd`s to the package root
-2. Builds `dist/` if missing
-3. Runs compiled server with `--env-file=.env`
+2. Builds `dist/` (and `@omnidev/core`) if missing
+3. Runs Node with `--env-file=.env` **only if** `.env` exists (`packages/core/bin/node-with-package-env.sh`)
 
 After changing MCP config: **MCP: Restart Servers** (or reload window).
 
