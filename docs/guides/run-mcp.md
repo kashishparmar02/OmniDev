@@ -28,11 +28,13 @@ cp packages/mcp-bitbucket/.env.example packages/mcp-bitbucket/.env
 
 Or set `BITBUCKET_EMAIL` and `BITBUCKET_API_TOKEN` in Cursor `mcp.json` `env` (overrides `.env`).
 
-Verify Bitbucket API credentials:
+Verify Bitbucket API credentials (create `.env` **or** export `BITBUCKET_EMAIL` + `BITBUCKET_API_TOKEN` first):
 
 ```bash
 npm run check:auth
 ```
+
+Without credentials you see `CONFIG_MISSING: BITBUCKET_EMAIL is required` — that is expected until `.env` or exports are set.
 
 ## Cursor `mcp.json`
 

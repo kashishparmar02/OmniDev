@@ -13,9 +13,9 @@
     "test": "vitest run",
     "mcp": "bash ./bin/run-mcp.sh",
     "start": "bash ./bin/run-mcp.sh",
-    "cli": "node --env-file=.env --import tsx src/cli.ts",
-    "check:auth": "node --env-file=.env --import tsx src/cli.ts auth",
-    "check:pr": "node --env-file=.env --import tsx src/cli.ts pr"
+    "cli": "bash ./bin/run-cli.sh",
+    "check:auth": "bash ./bin/run-cli.sh auth",
+    "check:pr": "bash ./bin/run-cli.sh pr"
   },
   "engines": {
     "node": ">=20"
