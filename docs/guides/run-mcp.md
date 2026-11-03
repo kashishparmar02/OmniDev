@@ -30,11 +30,13 @@ Or set `BITBUCKET_EMAIL` and `BITBUCKET_API_TOKEN` in Cursor `mcp.json` `env` (o
 
 ## Cursor `mcp.json`
 
-Print a snippet with resolved binary paths:
+Print a snippet with resolved **`run-mcp.sh`** paths (use these in Cursor; avoid broken paths when `.bin` symlinks mis-resolve):
 
 ```bash
 npm run mcp:paths
 ```
+
+If MCP logs `ENV_ARGS[@]: unbound variable`, pull latest `PR-Skills` (fixed launcher). If logs `node_modules/../core: No such file`, use the **`packages/mcp-bitbucket/bin/run-mcp.sh`** path from `mcp:paths`, not an old `.bin` path.
 
 Restart MCP in Cursor after edits.
 

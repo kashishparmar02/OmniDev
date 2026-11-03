@@ -20,8 +20,9 @@ const githubBin = resolveBin("omnidev-github-mcp");
 const bitbucketSh = join(root, "packages/mcp-bitbucket/bin/run-mcp.sh");
 const githubSh = join(root, "packages/mcp-github/bin/run-mcp.sh");
 
-const bitbucketCommand = bitbucketBin ?? bitbucketSh;
-const githubCommand = githubBin ?? githubSh;
+// Prefer package run-mcp.sh (stable when workspace symlinks resolve under node_modules).
+const bitbucketCommand = bitbucketSh;
+const githubCommand = githubSh;
 
 console.log("OmniDev MCP — use in ~/.cursor/mcp.json\n");
 console.log("Run from repo root (stdio MCP, for debugging):");
