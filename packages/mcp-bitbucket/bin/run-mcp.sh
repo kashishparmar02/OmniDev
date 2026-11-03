@@ -9,4 +9,4 @@ CORE_ROOT="$(cd "$ROOT/../core" && pwd)"
 if [[ ! -f "$CORE_ROOT/dist/pr-workflow/author-tools.js" ]]; then
   (cd "$CORE_ROOT" && npm run build)
 fi
-exec node --env-file="$ROOT/.env" "$ROOT/dist/mcp/server.js"
+exec bash "$CORE_ROOT/bin/node-with-package-env.sh" "$ROOT" "$ROOT/dist/mcp/server.js"

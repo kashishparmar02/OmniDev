@@ -7,3 +7,5 @@ Shared OmniDev building blocks:
 - PR description template in `templates/PR_TEMPLATE.md`
 
 Provider-specific **review** tools stay in each MCP package; **author** tools share this module.
+
+**Env loading:** `bin/node-with-package-env.sh` runs Node with optional `<package>/.env`; Cursor `mcp.json` `env` is applied first and is not overwritten.

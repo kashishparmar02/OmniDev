@@ -47,9 +47,9 @@ Write tools require **`confirmed: true`**.
 
 ## Auth
 
-- **Bitbucket author:** `git config user.email` + bitbucket.org git credential or `BITBUCKET_API_TOKEN` (PR read/write).
-- **Bitbucket review:** `packages/mcp-bitbucket/.env` (see [bitbucket-review/configuration.md](./bitbucket-review/configuration.md)).
-- **GitHub author:** authenticated `gh` CLI.
+- **Bitbucket review:** `BITBUCKET_EMAIL` + `BITBUCKET_API_TOKEN` via **`mcp.json` `env`** and/or `packages/mcp-bitbucket/.env` (see [configuration.md](./bitbucket-review/configuration.md)). `mcp.json` overrides `.env`.
+- **Bitbucket author (`bitbucket_pr_*`):** same token in `mcp.json` / `.env` **or** git credential for `bitbucket.org`; scripts also use `git config user.email` for API user.
+- **GitHub author:** authenticated `gh` CLI; optional `packages/mcp-github/.env` for future keys (same launcher pattern).
 
 ## Commits
 
