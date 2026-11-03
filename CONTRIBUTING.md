@@ -65,11 +65,10 @@ npm run mcp:bitbucket    # smoke-run Bitbucket MCP (stdio)
 npm run mcp:paths        # print Cursor mcp.json snippet
 ```
 
-Package CLI (Bitbucket review auth):
+Bitbucket auth check:
 
 ```bash
-cd packages/mcp-bitbucket
-cp .env.example .env
+cp packages/mcp-bitbucket/.env.example packages/mcp-bitbucket/.env
 npm run check:auth
 ```
 

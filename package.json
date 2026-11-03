@@ -12,7 +12,8 @@
     "build": "npm run build --workspaces --if-present",
     "mcp:bitbucket": "npm run mcp -w @omnidev/mcp-bitbucket",
     "mcp:github": "npm run mcp -w @omnidev/mcp-github",
-    "mcp:paths": "node scripts/print-mcp-paths.mjs"
+    "mcp:paths": "node scripts/print-mcp-paths.mjs",
+    "check:auth": "npm run check:auth -w @omnidev/mcp-bitbucket"
   },
   "engines": {
     "node": ">=20"

@@ -28,6 +28,12 @@ cp packages/mcp-bitbucket/.env.example packages/mcp-bitbucket/.env
 
 Or set `BITBUCKET_EMAIL` and `BITBUCKET_API_TOKEN` in Cursor `mcp.json` `env` (overrides `.env`).
 
+Verify Bitbucket API credentials:
+
+```bash
+npm run check:auth
+```
+
 ## Cursor `mcp.json`
 
 Print a snippet with resolved **`run-mcp.sh`** paths (use these in Cursor; avoid broken paths when `.bin` symlinks mis-resolve):
