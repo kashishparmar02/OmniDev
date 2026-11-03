@@ -88,7 +88,11 @@ npm run build
 npm test
 ```
 
-Wire MCP in Cursor — [docs/guides/pr-workflow-mcp.md](./docs/guides/pr-workflow-mcp.md) (author) and [packages/mcp-bitbucket/README.md](./packages/mcp-bitbucket/README.md) (review).
+Run MCP locally: `npm run mcp:bitbucket` or `npm run mcp:github` (from repo root after build).
+
+Cursor config paths: `npm run mcp:paths` (prints `mcp.json` snippet).
+
+Run and wire MCP — [docs/guides/run-mcp.md](./docs/guides/run-mcp.md). Author tools: [pr-workflow-mcp.md](./docs/guides/pr-workflow-mcp.md). Review: [packages/mcp-bitbucket/README.md](./packages/mcp-bitbucket/README.md).
 
 Skills: `skills/omnidev-review`, `skills/omnidev-respond`, plus `pr-comments`, `pr-comment-reply`, `pr-description-generator`.
 

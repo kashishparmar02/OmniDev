@@ -9,7 +9,10 @@
   "scripts": {
     "test": "npm test --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",
-    "build": "npm run build --workspaces --if-present"
+    "build": "npm run build --workspaces --if-present",
+    "mcp:bitbucket": "npm run mcp -w @omnidev/mcp-bitbucket",
+    "mcp:github": "npm run mcp -w @omnidev/mcp-github",
+    "mcp:paths": "node scripts/print-mcp-paths.mjs"
   },
   "engines": {
     "node": ">=20"

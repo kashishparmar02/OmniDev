@@ -11,7 +11,8 @@
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run --passWithNoTests",
-    "mcp": "node dist/mcp/server.js"
+    "mcp": "bash ./bin/run-mcp.sh",
+    "start": "bash ./bin/run-mcp.sh"
   },
   "engines": {
     "node": ">=20"

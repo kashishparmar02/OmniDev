@@ -39,12 +39,26 @@ Docs: [Create an API token](https://support.atlassian.com/bitbucket-cloud/docs/c
 ## 2. Install
 
 ```bash
-cd ~/Desktop/ASSET/cursor-pr-review
-cp .env.example .env   # then fill values
+cd /path/to/OmniDev
 npm install
 npm run build
 npm test
+cd packages/mcp-bitbucket
+cp .env.example .env   # optional if using mcp.json env
 npm run check:auth
+```
+
+Run the MCP process locally (stdio):
+
+```bash
+cd /path/to/OmniDev
+npm run mcp:bitbucket
+```
+
+Print Cursor **`mcp.json`** paths:
+
+```bash
+npm run mcp:paths
 ```
 
 ## 3. Cursor MCP wiring

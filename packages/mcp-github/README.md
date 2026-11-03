@@ -4,11 +4,15 @@ GitHub MCP for OmniDev **author** PR workflow (list/reply/publish). Review tools
 
 Uses shared `@omnidev/core` scripts; `origin` must be a GitHub remote. Auth via `gh` CLI.
 
+## Run
+
+From OmniDev root: `npm run mcp:github`. Config snippet: `npm run mcp:paths`.
+
 ## Cursor MCP
 
 ```json
 "omnidev-github": {
-  "command": "/absolute/path/to/OmniDev/packages/mcp-github/bin/run-mcp.sh"
+  "command": "/path/to/OmniDev/node_modules/.bin/omnidev-github-mcp"
 }
 ```
 

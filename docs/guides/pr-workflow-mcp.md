@@ -2,13 +2,25 @@
 
 Author-mode tools live on **provider MCP servers**, backed by shared `@omnidev/core` scripts. Skills stay the same; tool names use a **host prefix**.
 
-## Cursor wiring
+## Run and wire MCP
 
-**Bitbucket** (review + author on one server):
+From OmniDev repo root: `npm run mcp:bitbucket` or `npm run mcp:github`. Full steps: [run-mcp.md](./run-mcp.md).
+
+Cursor config (after `npm install`):
+
+```bash
+npm run mcp:paths
+```
+
+**Bitbucket** (review + author on one server) — example:
 
 ```json
 "bitbucket-pr-review": {
-  "command": "/absolute/path/to/OmniDev/packages/mcp-bitbucket/bin/run-mcp.sh"
+  "command": "/path/to/OmniDev/node_modules/.bin/omnidev-bitbucket-mcp",
+  "env": {
+    "BITBUCKET_EMAIL": "you@ei.study",
+    "BITBUCKET_API_TOKEN": "ATATT..."
+  }
 }
 ```
 
@@ -16,7 +28,7 @@ Author-mode tools live on **provider MCP servers**, backed by shared `@omnidev/c
 
 ```json
 "omnidev-github": {
-  "command": "/absolute/path/to/OmniDev/packages/mcp-github/bin/run-mcp.sh"
+  "command": "/path/to/OmniDev/node_modules/.bin/omnidev-github-mcp"
 }
 ```
 
