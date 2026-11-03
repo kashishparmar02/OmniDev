@@ -117,3 +117,7 @@ Lead with Do not merge / OK with nits / etc. from remaining critical/high.
 | Post-publish plain summary | Optional, tiny |
 
 If context is tight: shrink prior-thread detail, cap findings (best ≤8 publishable), skip activity feed.
+
+## Author handoff
+
+When review is done and the user is the **developer**, point them to **`omnidev-respond`** (`pr-comments` → `pr-comment-reply` → `pr-description-generator` via **`bitbucket_pr_*`** tools on this MCP). Do not run author publish tools during review.

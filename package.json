@@ -7,9 +7,9 @@
     "packages/*"
   ],
   "scripts": {
-    "test": "npm test --workspace=@omnidev/mcp-bitbucket",
-    "typecheck": "npm run typecheck --workspace=@omnidev/mcp-bitbucket",
-    "build": "npm run build --workspace=@omnidev/mcp-bitbucket"
+    "test": "npm test --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "build": "npm run build --workspaces --if-present"
   },
   "engines": {
     "node": ">=20"

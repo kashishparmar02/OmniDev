@@ -1,5 +1,9 @@
 # @omnidev/core
 
-Shared contracts for OmniDev (provider interface, thread states, finding schema).
+Shared OmniDev building blocks:
 
-**Status:** schemas currently ship inside `@omnidev/mcp-bitbucket`. Extraction into this package is planned before the GitHub provider.
+- **`registerAuthorPrTools`** — author-mode MCP tools (`*_pr_list_comments`, etc.) used by `@omnidev/mcp-bitbucket` and `@omnidev/mcp-github`
+- Shell scripts under `scripts/pr-workflow/` (Bitbucket + GitHub via `origin`)
+- PR description template in `templates/PR_TEMPLATE.md`
+
+Provider-specific **review** tools stay in each MCP package; **author** tools share this module.
