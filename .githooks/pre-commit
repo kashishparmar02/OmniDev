@@ -1,0 +1,3 @@
+#!/bin/sh
+# Blocks commits that contain secrets, secret files or private terms.
+exec node "$(git rev-parse --show-toplevel)/scripts/guard/cli.mjs" staged
