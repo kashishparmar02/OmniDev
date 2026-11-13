@@ -5,9 +5,14 @@
  *   to the current credentials.
  * - `unauthorized`: the credentials are missing, wrong or lack permission.
  * - `rate_limited`: the host refused the call for now; retrying later may work.
- * - `unavailable`: the host could not be reached or returned a server error.
+ * - `unavailable`: the host could not be reached, returned a server error or
+ *   returned a response OmniDev could not read.
+ * - `invalid_request`: the host understood the call and refused it, for
+ *   example because a branch does not exist. Retrying unchanged will not help.
+ * - `unsupported`: this host has no way to do what was asked.
  */
-export type ProviderErrorCode = "not_found" | "unauthorized" | "rate_limited" | "unavailable";
+export type ProviderErrorCode =
+  "not_found" | "unauthorized" | "rate_limited" | "unavailable" | "invalid_request" | "unsupported";
 
 /** The only error type an ICodeHostProvider method is allowed to reject with. */
 export class ProviderError extends Error {

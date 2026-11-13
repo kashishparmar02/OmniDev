@@ -33,6 +33,12 @@ describeProviderContract("in-memory", () => ({
   existing: pullRequest.ref,
   missing: { ...pullRequest.ref, number: 404 },
   anchor: { path: "src/cart.ts", line: 11, side: "new" },
+  draft: {
+    title: "Add coupons",
+    description: "Adds coupon codes to checkout.",
+    sourceBranch: "feat/coupons",
+    targetBranch: "main",
+  },
 }));
 
 it("does not let a caller change stored state through a returned object", async () => {
