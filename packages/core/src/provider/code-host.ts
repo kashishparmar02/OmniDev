@@ -11,10 +11,14 @@
 /** Which version of a file a line number refers to: before or after the change. */
 export type DiffSide = "old" | "new";
 
-/** Identifies one pull request. `owner` is a GitHub owner or a Bitbucket workspace. */
-export interface PullRequestRef {
+/** Identifies one repository. `owner` is a GitHub owner or a Bitbucket workspace. */
+export interface RepoRef {
   owner: string;
   repo: string;
+}
+
+/** Identifies one pull request. */
+export interface PullRequestRef extends RepoRef {
   number: number;
 }
 
@@ -29,6 +33,19 @@ export interface PullRequest {
   /** Commit at the tip of the source branch. Inline comments attach to this commit. */
   headCommit: string;
   url: string;
+}
+
+export interface NewPullRequest {
+  title: string;
+  description: string;
+  sourceBranch: string;
+  targetBranch: string;
+}
+
+/** The fields of a pull request that can be edited. Omitted fields are left as they are. */
+export interface PullRequestChanges {
+  title?: string;
+  description?: string;
 }
 
 /** A position in the pull request diff that an inline comment attaches to. */
@@ -67,12 +84,17 @@ export interface NewThread {
  * Everything OmniDev needs from a code host.
  *
  * Every method rejects with a ProviderError; implementations must not let
- * host-specific errors escape. Methods that change the host (createThread,
- * replyToThread, setThreadResolved) perform the change immediately, so asking
- * the user for approval is the caller's job, not the provider's.
+ * host-specific errors escape. Methods that change the host perform the change
+ * immediately, so asking the user for approval is the caller's job, not the
+ * provider's.
  */
 export interface ICodeHostProvider {
   getPullRequest(ref: PullRequestRef): Promise<PullRequest>;
+
+  /** Opens a pull request from the source branch, which must already be pushed. */
+  createPullRequest(repo: RepoRef, pullRequest: NewPullRequest): Promise<PullRequest>;
+
+  updatePullRequest(ref: PullRequestRef, changes: PullRequestChanges): Promise<PullRequest>;
 
   /** Returns the pull request's changes as one unified diff in git format. */
   getDiff(ref: PullRequestRef): Promise<string>;
@@ -87,7 +109,16 @@ export interface ICodeHostProvider {
    */
   createThread(ref: PullRequestRef, thread: NewThread): Promise<ReviewThread>;
 
+  /**
+   * Adds a reply to a thread. Every host supports this for inline threads. A
+   * host that cannot reply to a general thread rejects with `unsupported`.
+   */
   replyToThread(ref: PullRequestRef, threadId: string, body: string): Promise<Comment>;
 
+  /**
+   * Resolves or reopens a thread. Setting the state a thread already has is
+   * not an error. A host that cannot resolve a general thread rejects with
+   * `unsupported`.
+   */
   setThreadResolved(ref: PullRequestRef, threadId: string, resolved: boolean): Promise<void>;
 }

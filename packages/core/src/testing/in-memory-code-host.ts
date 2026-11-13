@@ -7,9 +7,12 @@
 import type {
   Comment,
   ICodeHostProvider,
+  NewPullRequest,
   NewThread,
   PullRequest,
+  PullRequestChanges,
   PullRequestRef,
+  RepoRef,
   ReviewThread,
 } from "../provider/code-host.js";
 import { ProviderError } from "../provider/errors.js";
@@ -35,7 +38,7 @@ export class InMemoryCodeHost implements ICodeHostProvider {
   private readonly currentUser: string;
   private nextId = 1;
 
-  /** `currentUser` is recorded as the author of every comment this instance writes. */
+  /** `currentUser` is recorded as the author of everything this instance writes. */
   constructor(seed: SeededPullRequest[] = [], currentUser = "omnidev-test-user") {
     this.currentUser = currentUser;
     for (const entry of seed) {
@@ -52,6 +55,28 @@ export class InMemoryCodeHost implements ICodeHostProvider {
 
   async getPullRequest(ref: PullRequestRef): Promise<PullRequest> {
     return structuredClone(this.find(ref).pullRequest);
+  }
+
+  /** New pull requests are numbered from 1000 so they cannot collide with seeded ones. */
+  async createPullRequest(repo: RepoRef, draft: NewPullRequest): Promise<PullRequest> {
+    const ref = { owner: repo.owner, repo: repo.repo, number: 1000 + this.nextId++ };
+    const pullRequest: PullRequest = {
+      ...draft,
+      ref,
+      state: "open",
+      author: this.currentUser,
+      headCommit: `head-of-${draft.sourceBranch}`,
+      url: `memory://${keyOf(ref)}`,
+    };
+    this.stored.set(keyOf(ref), { pullRequest, diff: "", threads: [] });
+    return structuredClone(pullRequest);
+  }
+
+  async updatePullRequest(ref: PullRequestRef, changes: PullRequestChanges): Promise<PullRequest> {
+    const { pullRequest } = this.find(ref);
+    if (changes.title !== undefined) pullRequest.title = changes.title;
+    if (changes.description !== undefined) pullRequest.description = changes.description;
+    return structuredClone(pullRequest);
   }
 
   async getDiff(ref: PullRequestRef): Promise<string> {

@@ -24,14 +24,17 @@ The behaviour of the interface is specified by a shared test suite,
 provider package must run it. `InMemoryCodeHost` is the reference
 implementation and the stand-in for a real host in capability tests.
 
-Three rules keep the contract small:
+Four rules keep the contract small:
 
 1. **Providers do I/O and translation only.** Checking that an inline anchor
    is inside the diff, asking the user for approval and removing duplicates all
    happen above the provider, once, for every host.
 2. **Providers reject only with `ProviderError`.** Its `code` tells a
    capability what happened without knowing which host it is talking to.
-3. **A method is added only when a capability needs it.** The interface is not
+3. **Host limits are explicit.** Where a host cannot do something, such as
+   GitHub replying to a general comment, the provider rejects with
+   `unsupported` and does not imitate the behaviour.
+4. **A method is added only when a capability needs it.** The interface is not
    a general-purpose host client.
 
 ## Alternatives considered
@@ -47,7 +50,7 @@ Three rules keep the contract small:
 
 ## Consequences
 
-- Adding a host means implementing six methods and passing the contract tests.
+- Adding a host means implementing eight methods and passing the contract tests.
   No capability changes.
 - Capability tests need no network and no credentials.
 - The contract only guarantees what its tests check. Behaviour that differs
