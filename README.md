@@ -81,6 +81,11 @@ with these limits:
 - Review workspaces need an existing local clone of the repository.
 - The packages are not published to npm yet; you build from source.
 
+## Roadmap
+
+What comes next, and what "done" means for each step, is in
+[ROADMAP.md](./ROADMAP.md).
+
 ## Development
 
 ```bash

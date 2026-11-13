@@ -85,5 +85,5 @@ personal email addresses or absolute paths from your machine.
 ## Documentation
 
 The README describes only what exists in the repository. Plans belong in
-GitHub issues. A pull request that adds a feature updates the README in the
+[ROADMAP.md](./ROADMAP.md). A pull request that adds a feature updates the README in the
 same change.
