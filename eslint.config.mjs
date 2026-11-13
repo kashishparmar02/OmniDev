@@ -10,4 +10,11 @@ export default tseslint.config(
     files: ["**/*.mjs"],
     languageOptions: { globals: globals.node },
   },
+  {
+    // A leading underscore marks a parameter that an interface requires but
+    // this implementation does not need.
+    rules: {
+      "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
+    },
+  },
 );
