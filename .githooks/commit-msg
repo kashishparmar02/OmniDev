@@ -1,0 +1,3 @@
+#!/bin/sh
+# Enforces the commit message rules described in CONTRIBUTING.md.
+exec node "$(git rev-parse --show-toplevel)/scripts/guard/cli.mjs" commit-msg "$1"

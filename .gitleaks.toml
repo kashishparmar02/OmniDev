@@ -1,0 +1,12 @@
+# Gitleaks runs in CI on every pull request and locally from the pre-commit
+# hook when installed. The default rules are kept and one rule is added.
+title = "OmniDev gitleaks configuration"
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "atlassian-api-token-prefixed"
+description = "Atlassian API token identified by its fixed prefix"
+regex = '''ATATT[A-Za-z0-9_\-=]{20,}'''
+keywords = ["ATATT"]
