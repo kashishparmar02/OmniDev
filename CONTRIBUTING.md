@@ -6,7 +6,7 @@
 git clone https://github.com/kashishparmar02/OmniDev.git
 cd OmniDev
 npm install      # also points git at the hooks in .githooks/
-npm run verify   # format check, lint, typecheck, tests, build
+npm run verify   # format check, lint, build, typecheck, tests
 ```
 
 Node 20 or newer is required. `npm run verify` is exactly what CI runs.
