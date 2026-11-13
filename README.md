@@ -16,6 +16,7 @@ the repository today; planned work lives in GitHub issues, not here.
 | Host requests                 | `sendHostRequest`, the single HTTP path to a host, with timeouts, safe retries and error mapping  |
 | `@omnidev/core/testing`       | An in-memory code host and the shared contract tests every provider must pass                     |
 | `@omnidev/provider-bitbucket` | Bitbucket Cloud implementation of the provider contract                                           |
+| `@omnidev/provider-github`    | GitHub implementation of the provider contract, using REST and GraphQL                            |
 | Repository guardrails         | Git hooks and a CI job that block secrets, secret files, private names and malformed commits      |
 | Continuous integration        | Format check, lint, typecheck, tests and build on every pull request                              |
 
