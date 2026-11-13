@@ -26,3 +26,4 @@ export {
   type HostRequestOptions,
   type HostResponse,
 } from "./provider/http.js";
+export { publishFindings, type Finding, type PublishOutcome } from "./review/publish-findings.js";
