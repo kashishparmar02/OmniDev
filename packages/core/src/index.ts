@@ -19,3 +19,10 @@ export {
   type AnchorCheck,
   type DiffFile,
 } from "./diff/unified-diff.js";
+export {
+  sendHostRequest,
+  type FetchLike,
+  type HostRequest,
+  type HostRequestOptions,
+  type HostResponse,
+} from "./provider/http.js";
