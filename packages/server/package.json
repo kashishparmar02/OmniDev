@@ -1,0 +1,28 @@
+{
+  "name": "@omnidev/server",
+  "version": "0.0.0",
+  "private": true,
+  "description": "OmniDev MCP server: pull request tools for coding agents",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "omnidev": "./dist/main.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "@omnidev/core": "*",
+    "@omnidev/provider-bitbucket": "*",
+    "@omnidev/provider-github": "*",
+    "zod": "^4.6.7"
+  }
+}
