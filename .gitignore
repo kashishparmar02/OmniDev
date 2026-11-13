@@ -1,0 +1,25 @@
+# Dependencies and build output
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+
+# Secrets. The pre-commit guard also blocks these when force-added.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials*.json
+
+# Local list of terms that must never be committed (see CONTRIBUTING.md).
+.private-terms
+
+# OS and editor
+.DS_Store
+.idea/
+.vscode/
+
+# Logs and scratch
+*.log
+tmp/
